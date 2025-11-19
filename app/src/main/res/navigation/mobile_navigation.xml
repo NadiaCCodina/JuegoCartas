@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.nadia.juegocartas.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_listaCartasFragment"
+            app:destination="@id/listaCartasFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.nadia.juegocartas.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.nadia.juegocartas.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/listaCartasFragment"
+        android:name="com.nadia.juegocartas.ui.cartas.ListaCartasFragment"
+        android:label="fragment_lista_cartas"
+        tools:layout="@layout/fragment_lista_cartas" >
+        <action
+            android:id="@+id/action_listaCartasFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_listaCartasFragment_to_enfrentamientoFragment"
+            app:destination="@id/enfrentamientoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enfrentamientoFragment"
+        android:name="com.nadia.juegocartas.ui.enfrentamientos.EnfrentamientoFragment"
+        android:label="EnfrentamientoFragment" >
+        <action
+            android:id="@+id/action_enfrentamientoFragment_to_listaCartasFragment"
+            app:destination="@id/listaCartasFragment" />
+    </fragment>
+</navigation>
