@@ -17,15 +17,15 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.nadia.juegocartas.ui.gallery.GalleryFragment"
+        android:name="com.nadia.juegocartas.ui.gallery.CrearCartaFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_crear_carta" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.nadia.juegocartas.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.nadia.juegocartas.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
     <fragment
         android:id="@+id/listaCartasFragment"
         android:name="com.nadia.juegocartas.ui.cartas.ListaCartasFragment"

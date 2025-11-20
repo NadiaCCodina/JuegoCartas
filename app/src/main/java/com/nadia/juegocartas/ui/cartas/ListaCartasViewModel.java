@@ -66,7 +66,7 @@ public class ListaCartasViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<List<Carta>> call, Throwable throwable) {
-                Log.d("errorInmueble",throwable.getMessage());
+                Log.d("errorCarta",throwable.getMessage());
 
                 Toast.makeText(getApplication(),"Error al obtener Cartas",Toast.LENGTH_LONG).show();
             }

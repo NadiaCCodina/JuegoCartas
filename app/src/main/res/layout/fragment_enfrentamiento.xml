@@ -116,14 +116,24 @@
             android:id="@+id/btnAceptar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="16dp"
             android:text="Aceptar"
-            android:layout_margin="8dp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:backgroundTint="#174545"
+            app:cornerRadius="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancelar"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="16dp"
+            app:backgroundTint="#000000"
+            app:cornerRadius="12dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

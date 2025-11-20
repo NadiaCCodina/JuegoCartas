@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Vista central del personaje -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/imgCara"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+        <ImageView
+            android:id="@+id/imgCabeza"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+        <ImageView
+            android:id="@+id/imgCuerpo"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
+
+    <!-- Atributos -->
+    <TextView
+        android:id="@+id/tvAtaque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ataque: "/>
+    <TextView
+        android:id="@+id/tvVida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vida: "/>
+    <TextView
+        android:id="@+id/tvTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: "/>
+
+    <!-- RecyclerViews para seleccionar partes -->
+    <TextView android:text="Caras" android:layout_marginTop="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCaras"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layoutManager="LinearLayoutManager"
+        android:orientation="horizontal"/>
+
+    <TextView android:text="Cabezas" android:layout_marginTop="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCabezas"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"/>
+
+    <TextView android:text="Cuerpos" android:layout_marginTop="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCuerpos"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"/>
+
+    <Button
+        android:id="@+id/btnCrear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Carta"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

@@ -7,15 +7,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nadia.juegocartas.R;
+import com.nadia.juegocartas.databinding.FragmentEnfrentamientoBinding;
 import com.nadia.juegocartas.modelos.Carta;
 import com.nadia.juegocartas.request.ApiClient;
 
@@ -25,7 +28,7 @@ import java.util.List;
 public class EnfrentamientoFragment extends Fragment {
 
     private EnfrentamientoViewModel mViewModel;
-
+    private FragmentEnfrentamientoBinding binding;
     public static EnfrentamientoFragment newInstance() {
         return new EnfrentamientoFragment();
     }
@@ -34,7 +37,8 @@ public class EnfrentamientoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(EnfrentamientoViewModel.class);
-        View view = inflater.inflate(R.layout.fragment_enfrentamiento, container, false);
+        binding = FragmentEnfrentamientoBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         ArrayList<Carta> cartas = (ArrayList<Carta>) getArguments().getSerializable("cartasSeleccionadas");
 
@@ -60,10 +64,30 @@ public class EnfrentamientoFragment extends Fragment {
                                 R.id.oponenteCarta3
                         );
                     }
-                }
+                    binding.btnAceptar.setOnClickListener(new View.OnClickListener() {
+                                                          @Override
+                                                          public void onClick(View view) {
+                                                              int userId = ApiClient.obtenerUserId(requireContext());
+                                                              int contrincanteid=contrincante.getIdContrincate();
+                                                                      mViewModel.enfrentamiento(userId, contrincanteid, cartas, contrincante.getCartasContrincante());
+                                                                    Log.d("enfrentamiento", "entro a enfrentamiento");
+                                                          }
+                                                      }
+                );}
         );
-        mViewModel.obtenerListaCartasContrincante();
 
+        mViewModel.obtenerListaCartasContrincante();
+        binding.btnCancelar.setOnClickListener(v -> {
+            Navigation.findNavController(v)
+                    .navigate(R.id.action_enfrentamientoFragment_to_listaCartasFragment);
+        });
+        mViewModel.getmResultado().observe(
+                getViewLifecycleOwner(),
+                resultado -> {
+                    Toast.makeText(getContext(),resultado, Toast.LENGTH_LONG).show();
+                }
+
+        );
 
         return view;
     }

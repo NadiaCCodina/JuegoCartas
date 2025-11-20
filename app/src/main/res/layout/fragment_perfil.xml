@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
+
+        <!-- FOTO -->
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="28dp"
+            android:background="#E0E0E0"
+            android:padding="4dp"
+            android:contentDescription="avatar" />
+
+        <!-- NOMBRE -->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/tvNombre"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:enabled="false"
+            android:padding="10dp"
+            android:background="#F5F5F5"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- EMAIL -->
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mail"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:enabled="false"
+            android:padding="10dp"
+            android:background="#F5F5F5"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- MONEDAS -->
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monedas Disponibles"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/tvMonedas"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:enabled="false"
+            android:padding="10dp"
+            android:background="#F5F5F5"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- CLAVE -->
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clave"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/tvclave"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:enabled="false"
+            android:padding="10dp"
+            android:background="#F5F5F5"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- BOTÓN -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="EDITAR"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="16dp"
+            app:backgroundTint="#000000"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+
+</ScrollView>
