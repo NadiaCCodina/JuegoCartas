@@ -1,5 +1,11 @@
 package com.nadia.juegocartas.ui.gallery;
 
+import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,45 +13,93 @@ import androidx.lifecycle.ViewModel;
 
 import com.nadia.juegocartas.modelos.Carta;
 import com.nadia.juegocartas.modelos.Personaje;
+import com.nadia.juegocartas.request.ApiClient;
 
-public class CrearCartaViewModel extends ViewModel {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-    private final MutableLiveData<Integer> selectedCaraId = new MutableLiveData<>();
-    private final MutableLiveData<Integer> selectedCabezaId = new MutableLiveData<>();
-    private final MutableLiveData<Integer> selectedCuerpoId = new MutableLiveData<>();
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private final MediatorLiveData<Personaje> personajeSeleccionado = new MediatorLiveData<>();
+public class CrearCartaViewModel extends AndroidViewModel {
 
-    public CrearCartaViewModel() {
-        personajeSeleccionado.addSource(selectedCaraId, id -> actualizarPersonaje());
-        personajeSeleccionado.addSource(selectedCabezaId, id -> actualizarPersonaje());
-        personajeSeleccionado.addSource(selectedCuerpoId, id -> actualizarPersonaje());
+    private MutableLiveData<Personaje> personajeSeleccionado = new MutableLiveData<>();
+    private MutableLiveData<String> mMensaje = new MutableLiveData<>();
+
+    public CrearCartaViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    private void actualizarPersonaje() {
-        Integer caraId = selectedCaraId.getValue();
-        Integer cabezaId = selectedCabezaId.getValue();
-        Integer cuerpoId = selectedCuerpoId.getValue();
-
-        if (caraId != null && cabezaId != null && cuerpoId != null) {
-            Personaje personaje = new Personaje();
-            personaje.setCaraId(caraId);
-            personaje.setCabezaId(cabezaId);
-            personaje.setCuerpoId(cuerpoId);
-
-            // Aquí podés setear atributos opcionales según tu lógica o datos locales
-            // Por ejemplo:
-            personaje.setImagen("https://midominio.com/imagenes/caras/" + caraId + ".png");
-
-            personajeSeleccionado.setValue(personaje);
-        }
+    public LiveData<Personaje> getPersonajeSeleccionado() {
+        return personajeSeleccionado;
     }
 
-    // Métodos de selección
-    public void seleccionarCara(int caraId) { selectedCaraId.setValue(caraId); }
-    public void seleccionarCabeza(int cabezaId) { selectedCabezaId.setValue(cabezaId); }
-    public void seleccionarCuerpo(int cuerpoId) { selectedCuerpoId.setValue(cuerpoId); }
+    public LiveData<String> getmMensaje() {
+        return mMensaje;
+    }
 
-    public LiveData<Personaje> getPersonajeSeleccionado() { return personajeSeleccionado; }
+    // --------------------------
+    // BUSCAR PERSONAJE POR PARTES
+    // --------------------------
+    public void buscarPersonajePorPartes(int cara, int cabeza, int cuerpo) {
+        String token = ApiClient.leerToken(getApplication());
+        ApiClient.JuegoServicio api = ApiClient.getJuegoServicio();
+        Log.d("Carta", "cara "+cara+ " Cabeza "+cabeza +" Cuerpo "+cuerpo);
+        Call<Personaje> call = api.buscarPersonajePorPartes("Bearer " + token, cara, cabeza, cuerpo);
+
+        call.enqueue(new Callback<Personaje>() {
+            @Override
+            public void onResponse(Call<Personaje> call, Response<Personaje> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    personajeSeleccionado.postValue(response.body());
+                    Log.d("errorPersonaje", personajeSeleccionado.toString());
+                } else {
+                    Toast.makeText(getApplication(), "No se encontró personaje con esas partes", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Personaje> call, Throwable throwable) {
+                Log.d("errorPersonaje", throwable.getMessage());
+                Toast.makeText(getApplication(), "Error al buscar personaje", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    // CREAR CARTA
+
+    public void crearCarta(int personajeId) {
+        String token = ApiClient.leerToken(getApplication());
+        ApiClient.JuegoServicio api = ApiClient.getJuegoServicio();
+
+        Call<Carta> call = api.crearCarta("Bearer " + token, personajeId);
+
+        call.enqueue(new Callback<Carta>() {
+            @Override
+            public void onResponse(Call<Carta> call, Response<Carta> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                   mMensaje.setValue("Personaje Creado Correctamente");
+
+                } else {
+                    try {
+                        String errorMsg = response.errorBody() != null ? response.errorBody().string() : "Error al crear carta";
+                        Toast.makeText(getApplication(), errorMsg, Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getApplication(), "Error al crear carta", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Carta> call, Throwable throwable) {
+                Log.d("errorCarta", throwable.getMessage());
+                Toast.makeText(getApplication(), "Error al crear carta", Toast.LENGTH_LONG).show();
+            }
+
+
+        });
+    }
 }
-

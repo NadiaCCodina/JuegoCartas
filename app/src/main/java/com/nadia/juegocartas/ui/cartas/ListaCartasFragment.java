@@ -55,6 +55,9 @@ private FragmentListaCartasBinding binding;
         Log.d("Fragment", "User ID = " + userId);
 
         mViewModel.obtenerListaCartas(userId);
+        mViewModel.getmBanderaJugar().observe(getViewLifecycleOwner(),flag -> {
+            binding.btnConfirmarSeleccion.setEnabled(flag);
+        });
         binding.btnConfirmarSeleccion.setOnClickListener(v -> {
             List<Carta> seleccionadas = mViewModel.getSeleccionadasLiveData().getValue();
 
@@ -62,7 +65,7 @@ private FragmentListaCartasBinding binding;
             bundle.putSerializable("cartasSeleccionadas", new ArrayList<>(seleccionadas));
             Navigation.findNavController(v)
                     .navigate(R.id.action_listaCartasFragment_to_enfrentamientoFragment, bundle);
-            Toast.makeText(getContext()," Cartas Sellecionadas",Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext()," Cartas Sellecionadas",Toast.LENGTH_LONG).show();
         });
 
         return root;

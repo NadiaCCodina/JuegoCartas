@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.glide)
 
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

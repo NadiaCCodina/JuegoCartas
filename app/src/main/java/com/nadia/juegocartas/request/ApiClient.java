@@ -9,10 +9,13 @@ import com.nadia.juegocartas.modelos.Carta;
 import com.nadia.juegocartas.modelos.Contrincante;
 import com.nadia.juegocartas.modelos.Enfrentamiento;
 import com.nadia.juegocartas.modelos.EnfrentamientoPeticion;
+import com.nadia.juegocartas.modelos.Personaje;
 import com.nadia.juegocartas.modelos.Usuario;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,9 +24,12 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public class ApiClient {
 
@@ -49,10 +55,14 @@ public class ApiClient {
         Call<List<Carta>> getCartasUsuario(@Header("Authorization") String token,
                                    @Path("id") int idJugador);
 
+        @Multipart
         @PUT("/api/usuarios/{id}/editar")
-        Call<Usuario> editarUsuario(@Header("Authorization") String token,
-                                        @Path("id") int idJugador,
-                                        @Body Usuario usuario);
+        Call<Usuario> editarUsuario(
+                @Header("Authorization") String token,
+                @Path("id") int idJugador,
+                @Part("usuarioJson") RequestBody usuarioJson,
+                @Part MultipartBody.Part file
+        );
 
         @GET("/api/usuarios/{id}")
         Call<Usuario> getUsuario(@Header("Authorization") String token,
@@ -64,7 +74,34 @@ public class ApiClient {
         Call<Enfrentamiento> enfrentamiento(@Header("Authorization") String token,
                                             @Body EnfrentamientoPeticion enfrentamientoPeticion);
 
+        @GET("api/cara")
+        Call<List<Carta>> getCaras();
 
+        @GET("api/cabeza")
+        Call<List<Carta>> getCabezas();
+
+        @GET("api/cuerpo")
+        Call<List<Carta>> getCuerpos();
+
+        @GET("api/carta/cambio")
+        Call<Personaje> buscarPersonajePorPartes(
+                @Header("Authorization") String token,
+                @Query("cara") int cara,
+                @Query("cabeza") int cabeza,
+                @Query("cuerpo") int cuerpo
+        );
+
+        @POST("api/carta")
+        Call<Carta> crearCarta(
+                @Header("Authorization") String token,
+                @Body int personajeId
+        );
+        @Multipart
+        @POST("api/usuarios/create")
+        Call<Usuario> registrarUsuario(
+                @Part("usuarioJson") RequestBody usuario,
+                @Part MultipartBody.Part file
+        );
     }
     public static void guardarToken(Context context, String token) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);

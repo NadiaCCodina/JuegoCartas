@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.nadia.juegocartas.R;
 import com.nadia.juegocartas.databinding.FragmentEnfrentamientoBinding;
 import com.nadia.juegocartas.modelos.Carta;
 import com.nadia.juegocartas.request.ApiClient;
+import com.nadia.juegocartas.ui.dialog.MiPopUpResultado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,10 +86,19 @@ public class EnfrentamientoFragment extends Fragment {
         mViewModel.getmResultado().observe(
                 getViewLifecycleOwner(),
                 resultado -> {
-                    Toast.makeText(getContext(),resultado, Toast.LENGTH_LONG).show();
-                }
 
+                    MiPopUpResultado popup = MiPopUpResultado.newInstance(resultado);
+
+                    popup.setOnCerrarPopup(() -> {
+                        NavController nav = Navigation.findNavController(requireView());
+                        nav.popBackStack(R.id.listaCartasFragment, false);
+                    });
+
+                    popup.show(getParentFragmentManager(), "popup");
+                }
         );
+
+
 
         return view;
     }

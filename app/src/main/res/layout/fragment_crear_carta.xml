@@ -1,79 +1,186 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-    <!-- Vista central del personaje -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
-        <ImageView
-            android:id="@+id/imgCara"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"/>
-        <ImageView
-            android:id="@+id/imgCabeza"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"/>
-        <ImageView
-            android:id="@+id/imgCuerpo"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"/>
+        <!-- Carta central -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgCartaCentral"
+                android:layout_width="200dp"
+                android:layout_height="301dp"
+                android:background="@drawable/fondo_carta_simple"
+                android:scaleType="fitCenter" />
+
+        </LinearLayout>
+
+        <!-- Atributos -->
+
+        <TextView
+            android:id="@+id/tvAtaque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ataque: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvVida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vida: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvTipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo: "
+            android:textSize="16sp" />
+
+        <!-- Caras -->
+        <TextView
+            android:text="Caras"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnCara1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/fondo_carta_simple"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/cara1" />
+
+            <ImageButton
+                android:id="@+id/btnCara2"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cara2"
+                android:background="@drawable/fondo_carta_simple" />
+
+            <ImageButton
+                android:id="@+id/btnCara3"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cara3"
+                android:background="@drawable/fondo_carta_simple" />
+        </LinearLayout>
+
+        <!-- Cabezas -->
+        <TextView
+            android:text="Cabezas"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnCabeza1"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cabeza1"
+                android:background="@drawable/fondo_carta_simple" />
+
+            <ImageButton
+                android:id="@+id/btnCabeza2"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cabeza2"
+                android:background="@drawable/fondo_carta_simple" />
+
+            <ImageButton
+                android:id="@+id/btnCabeza3"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cabeza3"
+                android:background="@drawable/fondo_carta_simple" />
+        </LinearLayout>
+
+        <!-- Cuerpos -->
+        <TextView
+            android:text="Cuerpos"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnCuerpo1"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cuerpo1"
+                android:background="@drawable/fondo_carta_simple" />
+
+            <ImageButton
+                android:id="@+id/btnCuerpo2"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cuerpo2"
+                android:background="@drawable/fondo_carta_simple" />
+
+            <ImageButton
+                android:id="@+id/btnCuerpo3"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cuerpo3"
+                android:background="@drawable/fondo_carta_simple" />
+        </LinearLayout>
+
+        <!-- Botón crear carta -->
+        <Button
+            android:id="@+id/btnCrear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear Carta"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
+
     </LinearLayout>
-
-    <!-- Atributos -->
-    <TextView
-        android:id="@+id/tvAtaque"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ataque: "/>
-    <TextView
-        android:id="@+id/tvVida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vida: "/>
-    <TextView
-        android:id="@+id/tvTipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo: "/>
-
-    <!-- RecyclerViews para seleccionar partes -->
-    <TextView android:text="Caras" android:layout_marginTop="16dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCaras"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:layoutManager="LinearLayoutManager"
-        android:orientation="horizontal"/>
-
-    <TextView android:text="Cabezas" android:layout_marginTop="16dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCabezas"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"/>
-
-    <TextView android:text="Cuerpos" android:layout_marginTop="16dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCuerpos"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"/>
-
-    <Button
-        android:id="@+id/btnCrear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crear Carta"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+</ScrollView>

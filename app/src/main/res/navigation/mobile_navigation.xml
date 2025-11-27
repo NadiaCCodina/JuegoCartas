@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.nadia.juegocartas.ui.gallery.CrearCartaFragment"
-        android:label="@string/menu_gallery"
+        android:label="Crear Carta"
         tools:layout="@layout/fragment_crear_carta" />
 
     <fragment
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/listaCartasFragment"
         android:name="com.nadia.juegocartas.ui.cartas.ListaCartasFragment"
-        android:label="fragment_lista_cartas"
+        android:label="Mis Cartas"
         tools:layout="@layout/fragment_lista_cartas" >
         <action
             android:id="@+id/action_listaCartasFragment_to_nav_home"
@@ -41,9 +41,15 @@
     <fragment
         android:id="@+id/enfrentamientoFragment"
         android:name="com.nadia.juegocartas.ui.enfrentamientos.EnfrentamientoFragment"
-        android:label="EnfrentamientoFragment" >
+        android:label="Enfrentamiento" >
         <action
             android:id="@+id/action_enfrentamientoFragment_to_listaCartasFragment"
             app:destination="@id/listaCartasFragment" />
     </fragment>
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.nadia.juegocartas.ui.login.LoginActivity"
+        android:label="login"
+        tools:layout="@layout/login" />
 </navigation>

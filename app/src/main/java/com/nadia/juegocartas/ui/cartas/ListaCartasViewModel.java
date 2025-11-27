@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListaCartasViewModel extends AndroidViewModel {
-
+    private MutableLiveData<Boolean> mBanderaJugar= new MutableLiveData<>();
 
     private MutableLiveData<Carta> mCartA;
     private static final int MAX_SELECCION = 3;
@@ -47,6 +47,14 @@ public class ListaCartasViewModel extends AndroidViewModel {
 
     public void setSeleccionadasLiveData(MutableLiveData<List<Carta>> seleccionadasLiveData) {
         this.seleccionadasLiveData = seleccionadasLiveData;
+    }
+
+    public MutableLiveData<Boolean> getmBanderaJugar() {
+        return mBanderaJugar;
+    }
+
+    public void setmBanderaJugar(MutableLiveData<Boolean> mBanderaJugar) {
+        this.mBanderaJugar = mBanderaJugar;
     }
 
     public void obtenerListaCartas(int idUsuario){
@@ -93,7 +101,9 @@ public class ListaCartasViewModel extends AndroidViewModel {
                 .collect(Collectors.toList());
 
         seleccionadasLiveData.setValue(seleccionadas);
-
+        if(seleccionadas.size()==3){mBanderaJugar.setValue(true);}else{
+            mBanderaJugar.setValue(false);
+        }
         // Actualizar RecyclerView de todas las cartas
         mListaCarta.setValue(lista);
     }

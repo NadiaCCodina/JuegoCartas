@@ -20,6 +20,14 @@ public class Usuario {
         this.puntosHabilidad = puntosHabilidad;
     }
 
+    public Usuario( String nombre, String email, String clave) {
+
+        this.nombre = nombre;
+        this.email = email;
+        this.clave = clave;
+
+    }
+
     public int getId() {
         return id;
     }

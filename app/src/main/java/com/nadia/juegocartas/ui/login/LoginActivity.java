@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nadia.juegocartas.MainActivity;
 import com.nadia.juegocartas.databinding.LoginBinding;
+import com.nadia.juegocartas.ui.registro.RegistroActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginActivityViewModel viewModel;
@@ -21,6 +22,13 @@ public class LoginActivity extends AppCompatActivity {
         binding =LoginBinding.inflate(getLayoutInflater());
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginActivityViewModel.class);
         setContentView(binding.getRoot());
+        binding.tvRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                startActivity(intent);
+            }
+        });
 
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override

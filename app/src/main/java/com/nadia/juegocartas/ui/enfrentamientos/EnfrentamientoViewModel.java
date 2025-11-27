@@ -124,7 +124,7 @@ public class EnfrentamientoViewModel extends AndroidViewModel {
 
                 switch (resultado) {
                     case 1:
-                        mResultado.setValue("Ganaste");
+                        mResultado.setValue("Ganaste!!");
                         break;
                     case 2:
                         mResultado.setValue("Empate");

@@ -1,6 +1,7 @@
 package com.nadia.juegocartas.ui.gallery;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nadia.juegocartas.R;
-import com.nadia.juegocartas.databinding.FragmentGalleryBinding;
+import com.nadia.juegocartas.databinding.FragmentCrearCartaBinding;
+
 import com.nadia.juegocartas.modelos.Carta;
 import com.nadia.juegocartas.modelos.Personaje;
 import com.nadia.juegocartas.request.ApiClient;
@@ -27,85 +29,126 @@ import java.util.List;
 
 public class CrearCartaFragment extends Fragment {
 
+    private FragmentCrearCartaBinding binding;
     private CrearCartaViewModel viewModel;
 
-    private ImageView imgCara, imgCabeza, imgCuerpo;
-    private TextView tvAtaque, tvVida, tvTipo;
-    private Button btnCrear;
-
-    private RecyclerView rvCaras, rvCabezas, rvCuerpos;
+    // IDs de las partes seleccionadas actualmente
+    private int caraSeleccionada = 1;
+    private int cabezaSeleccionada = 1;
+    private int cuerpoSeleccionado = 1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crear_carta, container, false);
 
-        // Vistas
-        imgCara = view.findViewById(R.id.imgCara);
-        imgCabeza = view.findViewById(R.id.imgCabeza);
-        imgCuerpo = view.findViewById(R.id.imgCuerpo);
-        tvAtaque = view.findViewById(R.id.tvAtaque);
-        tvVida = view.findViewById(R.id.tvVida);
-        tvTipo = view.findViewById(R.id.tvTipo);
-        btnCrear = view.findViewById(R.id.btnCrear);
-
-        rvCaras = view.findViewById(R.id.rvCaras);
-        rvCabezas = view.findViewById(R.id.rvCabezas);
-        rvCuerpos = view.findViewById(R.id.rvCuerpos);
-
-        // ViewModel
+        binding = FragmentCrearCartaBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(CrearCartaViewModel.class);
 
-        // Observador
+
+        // OBSERVERS
+
         viewModel.getPersonajeSeleccionado().observe(getViewLifecycleOwner(), personaje -> {
             if (personaje != null) {
 
-                Glide.with(this).load(ApiClient.URL_BASE + personaje.getImagen()).into(imgCara);
-                tvAtaque.setText("Ataque: " + personaje.getAtaque());
-                tvVida.setText("Vida: " + personaje.getVida());
-                tvTipo.setText("Tipo: " + (personaje.getTipo() == 0 ? "Cuerpo a Cuerpo" : "Distancia"));
+                // IMÁGENES
+                Glide.with(requireContext())
+                        .load(ApiClient.URL_BASE + personaje.getImagen())
+                        .into(binding.imgCartaCentral);
+                Log.d("crear carta", "Entro a mostrar personaje "+personaje.getImagen() );
+                // STATS
+                binding.tvAtaque.setText("Ataque: " + personaje.getAtaque());
+                binding.tvVida.setText("Vida: " + personaje.getVida());
+                binding.tvTipo.setText("Tipo: " + (personaje.getTipo() == 0 ?
+                        "Cuerpo a Cuerpo" : "Distancia"));
             }
         });
 
-        // Simulación de lista de partes (obtener de API o local)
-        List<Carta> listaCaras = getCaras();
-        List<Carta> listaCabezas = getCabezas();
-        List<Carta> listaCuerpos = getCuerpos();
 
-        // Adaptadores
-        ParteAdapter adapterCaras = new ParteAdapter(listaCaras, viewModel::seleccionarCara);
-        ParteAdapter adapterCabezas = new ParteAdapter(listaCabezas, viewModel::seleccionarCabeza);
-        ParteAdapter adapterCuerpos = new ParteAdapter(listaCuerpos, viewModel::seleccionarCuerpo);
+        // CARGAR PERSONAJE INICIAL
 
-        rvCaras.setAdapter(adapterCaras);
-        rvCaras.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        buscarPersonajePorPartes();
 
-        rvCabezas.setAdapter(adapterCabezas);
-        rvCabezas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        rvCuerpos.setAdapter(adapterCuerpos);
-        rvCuerpos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        // LISTENERS PARA CARAS
 
-        // Botón crear
-        btnCrear.setOnClickListener(v -> {
+        binding.btnCara1.setOnClickListener(v -> {
+            caraSeleccionada = 1;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCara2.setOnClickListener(v -> {
+            caraSeleccionada = 4;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCara3.setOnClickListener(v -> {
+            caraSeleccionada = 5;
+            buscarPersonajePorPartes();
+        });
+
+
+        // LISTENERS PARA CABEZAS
+        binding.btnCabeza1.setOnClickListener(v -> {
+            cabezaSeleccionada = 1;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCabeza2.setOnClickListener(v -> {
+            cabezaSeleccionada = 2;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCabeza3.setOnClickListener(v -> {
+            cabezaSeleccionada = 3;
+            buscarPersonajePorPartes();
+        });
+
+
+        // LISTENERS PARA CUERPOS
+
+        binding.btnCuerpo1.setOnClickListener(v -> {
+            cuerpoSeleccionado = 1;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCuerpo2.setOnClickListener(v -> {
+            cuerpoSeleccionado = 3;
+            buscarPersonajePorPartes();
+        });
+
+        binding.btnCuerpo3.setOnClickListener(v -> {
+            cuerpoSeleccionado = 4;
+            buscarPersonajePorPartes();
+        });
+
+
+        // BOTÓN CREAR
+
+        binding.btnCrear.setOnClickListener(v -> {
             Personaje p = viewModel.getPersonajeSeleccionado().getValue();
-            if (p != null) {
-                Toast.makeText(getContext(),
-                        "Carta creada: Cara " + p.getCaraId() +
-                                ", Cabeza " + p.getCabezaId() +
-                                ", Cuerpo " + p.getCuerpoId(),
-                        Toast.LENGTH_SHORT).show();
-                // Llamar API para crear carta usando IDs
-            } else {
-                Toast.makeText(getContext(), "Selecciona todas las partes", Toast.LENGTH_SHORT).show();
+
+            if (p == null) {
+                Toast.makeText(requireContext(), "No se pudo cargar el personaje", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            // Llamar al endpoint para crear la carta
+            viewModel.crearCarta(p.getId());
         });
 
-        return view;
+        return binding.getRoot();
     }
 
-    // Métodos de ejemplo para obtener listas de partes
-    private List<Carta> getCaras() { return new ArrayList<>(); }
-    private List<Carta> getCabezas() { return new ArrayList<>(); }
-    private List<Carta> getCuerpos() { return new ArrayList<>(); }
+
+    // BUSCAR PERSONAJE POR PARTES
+
+    private void buscarPersonajePorPartes() {
+        viewModel.buscarPersonajePorPartes(caraSeleccionada, cabezaSeleccionada, cuerpoSeleccionado);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
